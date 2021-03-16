@@ -1,0 +1,34 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: basic-cluster
+  region: ap-south-1
+  version: "eks-available-version"
+
+vpc:
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+  subnets:
+    public:
+      pub-ap-south-1a: { id: XXXXX }
+      pub-ap-south-1b: { id: XXXXX }
+      pub-ap-south-1c: { id: XXXXX }
+    private:
+      pri-ap-south-1a: { id: XXXXX }
+      pri-ap-south-1b: { id: XXXXX }
+      pri-ap-south-1c: { id: XXXXX }
+
+managedNodeGroups:
+  - name: ng-1
+    instanceType: t3.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    privateNetworking: true
+    subnets:
+       - pri-ap-south-1a
+    ssh:
+      publicKeyPath: <location of ssh pub key to be added in the ec2 instances>
